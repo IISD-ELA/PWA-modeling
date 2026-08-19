@@ -32,7 +32,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://www.iisd.org/ela/"
 Organization = "https://www.iisd.org/"
-Repository = "https://github.com/IISD-ELA/PWA-hydro-conditioning-main"
+Repository = "https://github.com/IISD-ELA/PWA-modeling"
 
 [project.optional-dependencies]
 dev = [

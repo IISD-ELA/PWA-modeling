@@ -1,4 +1,4 @@
-# PWA-hydro-conditioning-main
+# PWA-modeling
 Author: Idil Yaktubay (iyaktubay@iisd-ela.org), IISD-ELA
 
 This repository is the **orchestrator entry point** for the PWA pipeline. Installing it gives you a unified command-line interface (`pwa-step0` … `pwa-step3`) for the four packages that implement the pipeline:
@@ -121,7 +121,7 @@ Today (GitHub-only, before the packages are on PyPI), clone all three source rep
 ```bash
 git clone https://github.com/IISD-ELA/PWA-hydro-conditioning-tools.git
 git clone https://github.com/IISD-ELA/PWA.git
-git clone https://github.com/IISD-ELA/PWA-hydro-conditioning-main.git
+git clone https://github.com/IISD-ELA/PWA-modeling.git
 
 conda create -n pwa python=3.12
 conda activate pwa
@@ -130,7 +130,7 @@ conda install -c conda-forge gdal
 pip install -e ./PWA-hydro-conditioning-tools
 pip install -e ./PWA/pwa_raven
 pip install -e ./PWA/pwa_calibration
-pip install -e ./PWA-hydro-conditioning-main      # registers pwa-step0 .. pwa-step3 on PATH
+pip install -e ./PWA-modeling      # registers pwa-step0 .. pwa-step3 on PATH
 ```
 
 Verify:
@@ -143,7 +143,7 @@ pwa-hydrocondition --help
 
 ## Repository Structure
 ```
-PWA-hydro-conditioning-main/
+PWA-modeling/
 ├── pyproject.toml              # Orchestrator package — declares pwa-tools / pwa-raven / pwa-calibration as deps + console scripts
 ├── src/pwa/__init__.py         # Empty namespace anchor for the orchestrator package
 ├── pwa_config.example.yml      # Sample config for Step 0
@@ -182,7 +182,7 @@ Your terminal should look something like this:
 ```
 1.3 Clone this repository to your workspace by running the following command:
 ```powershell
-(base) PS C:\Users\iyaktubay> git clone https://github.com/IISD-ELA/PWA-hydro-conditioning-main.git
+(base) PS C:\Users\iyaktubay> git clone https://github.com/IISD-ELA/PWA-modeling.git
 ```
 1.4 In the same workspace, clone the [pwa-tools repository](https://github.com/IISD-ELA/PWA-hydro-conditioning-tools) by running the following command:
 ```powershell
@@ -195,21 +195,21 @@ Your terminal should look something like this:
 <img width="292" height="66" alt="image" src="https://github.com/user-attachments/assets/aac6a61a-4dc6-48e4-90bc-b97c5ac431c9" />
 
 2.2 In the command line, change your working directory to the cloned ```PWA-hydro-conditioning-tools``` folder.
-You can do this with the ```cd``` command, followed by a space and the path to the folder (relative to your current location). For example, if the cloned folder is located ```C:\Users\iyaktubay\PWA-hydro-conditioning-main``` and your current location is ```C:\Users\iyaktubay```, then the appropriate command would be:
+You can do this with the ```cd``` command, followed by a space and the path to the folder (relative to your current location). For example, if the cloned folder is located ```C:\Users\iyaktubay\PWA-modeling``` and your current location is ```C:\Users\iyaktubay```, then the appropriate command would be:
 ```powershell
-(base) PS C:\Users\iyaktubay> cd PWA-hydro-conditioning-main
+(base) PS C:\Users\iyaktubay> cd PWA-modeling
 ```
 And, after running the command, your terminal would look like this:
 ```powershell
-(base) PS C:\Users\iyaktubay\PWA-hydro-conditioning-main>
+(base) PS C:\Users\iyaktubay\PWA-modeling>
 ```
 2.3 Now that your working directory is the ```PWA-hydro-conditioning-tools``` folder, you can create your environment by running the following command:
 ```powershell
-(base) PS C:\Users\iyaktubay\PWA-hydro-conditioning-main> conda env create -f hydrocon_env.yml
+(base) PS C:\Users\iyaktubay\PWA-modeling> conda env create -f hydrocon_env.yml
 ```
 2.4 To confirm that your environment has been successfully created, you can run the following command:
 ```powershell
-(base) PS C:\Users\iyaktubay\PWA-hydro-conditioning-main> conda env list
+(base) PS C:\Users\iyaktubay\PWA-modeling> conda env list
 ```
 This should return something like this:
 ```powershell
@@ -220,7 +220,7 @@ geotest                  C:\Users\iyaktubay\AppData\Local\anaconda3\envs\geotest
 hydrocon_env             C:\Users\iyaktubay\AppData\Local\anaconda3\envs\hydrocon_env
 pwa_dev                  C:\Users\iyaktubay\AppData\Local\anaconda3\envs\pwa_dev
 test_env                 C:\Users\iyaktubay\AppData\Local\anaconda3\envs\test_env
-(base) PS C:\Users\iyaktubay\PWA-hydro-conditioning-main>
+(base) PS C:\Users\iyaktubay\PWA-modeling>
 ```
 ### 3. Install the pwa-tools package
 3.1 Reopen the Visual Studio Code app and open a new PowerShell terminal just as you did in step 1.2. Your terminal should look like:
@@ -265,7 +265,7 @@ On branch main
 Your branch is up to date with 'origin/main'.
 ```
 ### 4. Prepare the input data
-Create a ```Data/``` folder inside the ```PWA-hydro-conditioning-main``` folder and download and extract the following zip files into it. Do **not** create any subfolders in the ```Data/``` folder — the Step 0 runner expects all input data files to live at the top level of ```Data/``` and will organize input and output files into subfolders itself.
+Create a ```Data/``` folder inside the ```PWA-modeling``` folder and download and extract the following zip files into it. Do **not** create any subfolders in the ```Data/``` folder — the Step 0 runner expects all input data files to live at the top level of ```Data/``` and will organize input and output files into subfolders itself.
 - Watershed of interest based on outlet point from the [CLRH Hydrofabrics website](https://hydrology.uwaterloo.ca/CLRH/Hydrofabric.html) (e.g., ID: 05OE006 for Manning Canal)
 - Streams dataset of interest from [NHN streams website](https://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nhn_rhn/shp_en/).
      1. In the directory, open the folder named with the first two digits of your CLRH station ID (e.g., open the ```05/``` folder if your CLRH station ID is ```05OE006```).
@@ -277,7 +277,7 @@ Create a ```Data/``` folder inside the ```PWA-hydro-conditioning-main``` folder 
 Your local workspace should now have the following structure:
 ```powershell
 your-working-directory/
-├── PWA-hydro-conditioning-main/
+├── PWA-modeling/
     ├── README.md
     ├── .gitignore
     └── Data
@@ -287,11 +287,11 @@ your-working-directory/
 ```
 
 ### 5. Run the hydroconditioning pipeline
-5.1 On Visual Studio Code's welcome page, open the ```PWA-hydro-conditioning-main``` folder by clicking "Open folder...":
+5.1 On Visual Studio Code's welcome page, open the ```PWA-modeling``` folder by clicking "Open folder...":
 
 <img width="450" height="339" alt="image" src="https://github.com/user-attachments/assets/a307cdca-e5ce-4f85-8038-73004327e639" />
 
-5.2 Open up terminal on Visual Studio Code once again if it's not already open and change your working directory to the ```PWA-hydro-conditioning-main``` folder if it's not already there.
+5.2 Open up terminal on Visual Studio Code once again if it's not already open and change your working directory to the ```PWA-modeling``` folder if it's not already there.
 
 5.3 Generate a config file once (interactively):
 ```powershell
@@ -332,7 +332,7 @@ Each of the four packages (`pwa-tools`, `pwa-raven`, `pwa-calibration`, and this
 cd PWA-hydro-conditioning-tools && python -m pytest -q     # Step 0
 cd PWA/pwa_raven                && python -m pytest -q     # Steps 1-2
 cd PWA/pwa_calibration          && python -m pytest -q     # Step 3
-cd PWA-hydro-conditioning-main  && python -m pytest -q     # orchestrator
+cd PWA-modeling  && python -m pytest -q     # orchestrator
 ```
 
 Useful flags during development:
