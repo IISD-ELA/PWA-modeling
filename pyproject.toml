@@ -3,6 +3,9 @@ requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
+name = "pwa"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
 authors = [
     {name = "IISD Experimental Lakes Area", email = "eladata@iisd.net"},
     {name = "Thomas Saleh", email = "tsaleh@iisd-ela.org"},
@@ -13,8 +16,6 @@ maintainers = [
     {name = "Thomas Saleh", email = "tsaleh@iisd-ela.org"},
     {name = "Idil Yaktubay", email = "iyaktubay@iisd-ela.org"}
 ]
-name = "pwa"
-version = "0.1.0"
 description = "PWA pipeline orchestrator — single install + unified CLI for Steps 0–3"
 readme = "README.md"
 requires-python = ">=3.10"
