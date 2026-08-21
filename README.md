@@ -114,32 +114,30 @@ Behaviour is identical; the `pwa.*` symbols are direct re-exports of these.
   logging.basicConfig(level=logging.INFO, format="%(message)s")
   ```
 
-## Quick install (for the impatient)
+## Quick install
 
-Today (GitHub-only, before the packages are on PyPI), clone all three source repos and pip-install them in dependency order:
+PWA is available on PyPI. Create a Python 3.12 environment, install GDAL through conda-forge, then install PWA and its Python dependencies with a single `pip` command:
 
 ```bash
-git clone https://github.com/IISD-ELA/PWA-hydro-conditioning-tools.git
-git clone https://github.com/IISD-ELA/PWA.git
-git clone https://github.com/IISD-ELA/PWA-modeling.git
-
-conda create -n pwa python=3.12
+conda create -n pwa python=3.12 -y
 conda activate pwa
-conda install -c conda-forge gdal
 
-pip install -e ./PWA-hydro-conditioning-tools
-pip install -e ./PWA/pwa_raven
-pip install -e ./PWA/pwa_calibration
-pip install -e ./PWA-modeling      # registers pwa-step0 .. pwa-step3 on PATH
+# Install GDAL separately as a compiled system dependency
+conda install -c conda-forge gdal -y
+
+# Install PWA and all Python package dependencies
+pip install pwa-modeling
 ```
 
-Verify:
+Installing `pwa-modeling` automatically installs the required Python packages, including `pwa-tools`, `pwa-raven`, and `pwa-calibration`.
+
+Verify the installation:
 
 ```bash
 pwa-hydrocondition --help
 ```
 
-**Future (post-PyPI publish)**: a single `pip install pwa` will replace the four-line install block above.
+> **Note:** The Raven hydrological model executable must be installed separately and available on your system `PATH` for workflows that run Raven. MPI is also required separately if using parallel calibration.
 
 ## Repository Structure
 ```
