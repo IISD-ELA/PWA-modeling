@@ -1,5 +1,25 @@
-# PWA-hydro-conditioning-main
-Author: Idil Yaktubay (iyaktubay@iisd-ela.org), IISD-ELA
+# PWA-modeling
+Authors: Idil Yaktubay (iyaktubay@iisd-ela.org), IISD-ELA
+Thomas Saleh (tsaleh@iisd-ela.org), IISD-ELA
+
+**Welcome to the Prairie Watershed Analytics Open-Source Hydrological Data Project!!**
+
+👟 To install and run the PWA python codebase on your local system, please **read on**.
+
+✨ If you want to access and use your own custom watershed mapping and modeling products without touching any code, please see the [Product Page](PRODUCT.md).
+
+🔨 If you're already a user of the PWA project and are interested in becoming an active contributor, please go to the [Contributors Page](CONTRIBUTING.md)
+
+![Example of a PWA Hydrological Model displayed in RavenView](images/RavenView.png)
+This project uses the [Raven Hydrological Framework](https://raven.uwaterloo.ca/) and [RavenView](https://raven.uwaterloo.ca/RavenView/RavenView.html) provided by the University of Waterloo.
+
+## What is the Prairie Watershed Analytics project?
+
+The health of lakes and streams across the Canadian Prairies is closely connected to upstream land uses, conservation practices, and water management. Prairie Watershed Analytics (PWA) focuses on providing Canadians in the Prairies with the information they need to understand their local watershed. Watershed models can support local decision-makers and businesses with evaluating ecosystem services and connecting with environmental incentive programs. Prairie Watershed Analytics is making this practice simple and accessible using open data and tools to automate and scale watershed modeling tailored to the Prairies. 
+
+You can visit our website for more information on the [Prairie Watershed Analytics project](https://www.iisd.org/projects/prairie-watershed-analytics), the [International Institute for Sustainable Development](https://www.iisd.org/), and the [IISD Experimental Lakes Area](https://www.iisd.org/ela/).
+
+## Installing and Running the PWA Python Toolkit
 
 This repository is the **orchestrator entry point** for the PWA pipeline. Installing it gives you a unified command-line interface (`pwa-step0` … `pwa-step3`) for the four packages that implement the pipeline:
 
