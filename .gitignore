@@ -17,3 +17,4 @@ htmlcov/
 # Local tooling config
 .gh_config/
 pwa_config.yml
+local/
