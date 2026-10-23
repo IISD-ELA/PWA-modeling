@@ -24,10 +24,24 @@ pwa-nc-processing --config nc_processing.yml    # Step 1 — NetCDF / forcing pr
 
 pwa-init-raven-inputs raven_inputs.yml
 pwa-raven-inputs --config raven_inputs.yml      # Step 2 — Raven input generation
+                                                # (also writes RavenView visualization
+                                                #  files when rivers_shapefile is set)
 
 pwa-init-calibration calibration.yml
 pwa-calibrate --config calibration.yml          # Step 3 — calibration
 ```
+
+### RavenView visualization
+
+When `rivers_shapefile` is set in `raven_inputs.yml`, `pwa-raven-inputs` also writes a [RavenView](https://raven.uwaterloo.ca/RavenView/RavenView.html)-compatible GeoJSON pair into `<output_dir>/Raven/RavenView/`:
+
+```
+<output_dir>/Raven/RavenView/
+    <watershed_name>.json         # subbasins
+    <watershed_name>Rivers.json   # rivers
+```
+
+Upload both at <https://raven.uwaterloo.ca/RavenView/RavenView.html> to render the watershed in the browser. Set `write_ravenview: false` to opt out, or leave `rivers_shapefile` unset to skip the export entirely. A standalone `pwa-ravenview` CLI exists for one-off exports outside the pipeline.
 
 These commands are also available as Python modules (`python -m pwa_tools.run_step0`, `python -m pwa_raven.run_nc_processing`, etc.) for users who prefer that style.
 
@@ -52,9 +66,15 @@ step0 = pwa.run_step0(config0, generate_wetlands=False)
 config1 = pwa.NcProcessingConfig.from_yaml("nc_processing.yml")
 step1 = pwa.run_nc_processing(config1)
 
-# Step 2 — Raven input generation
+# Step 2 — Raven input generation (also writes RavenView GeoJSON when
+# rivers_shapefile is set in the config).
 config2 = pwa.RavenInputsConfig.from_yaml("raven_inputs.yml")
 step2 = pwa.run_raven_inputs(config2)
+# step2.ravenview_subbasins and .ravenview_rivers point at the GeoJSON
+# pair, or are None if RavenView export was skipped.
+
+# Or generate a one-off RavenView export from an existing config:
+# sub, riv = pwa.export_for_ravenview_from_config(config2)
 
 # Step 3 — calibration
 config3 = pwa.CalibrationConfig.from_yaml("calibration.yml")

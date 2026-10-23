@@ -39,6 +39,15 @@ from pwa_raven.raven_inputs import (
     run_raven_inputs,
 )
 
+# RavenView export — visualization side-output. Runs automatically as
+# part of Step 2 when ``rivers_shapefile`` is set on the config; also
+# callable directly for one-off exports outside the pipeline.
+from pwa_raven.raven.ravenview import (
+    export_for_ravenview,
+    export_for_ravenview_from_config,
+    validate_ravenview_geojson,
+)
+
 # Step 3 — calibration (pwa-calibration)
 from pwa_calibration.runner import run_calibration
 from pwa_calibration.setup import CalibrationConfig
@@ -57,6 +66,10 @@ __all__ = [
     "RavenInputsConfig",
     "RavenInputsResult",
     "run_raven_inputs",
+    # RavenView
+    "export_for_ravenview",
+    "export_for_ravenview_from_config",
+    "validate_ravenview_geojson",
     # Step 3
     "CalibrationConfig",
     "run_calibration",
