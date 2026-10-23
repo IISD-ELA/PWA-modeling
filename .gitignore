@@ -11,3 +11,4 @@ __pycache__/
 
 # Local tooling config
 .gh_config/
+local/
