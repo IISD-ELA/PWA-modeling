@@ -11,7 +11,7 @@ Thomas Saleh (tsaleh@iisd-ela.org), IISD-ELA
 🔨 If you're already a user of the PWA project and are interested in becoming an active contributor, please go to the [Contributors Page](CONTRIBUTING.md)
 
 ![Example of a PWA Hydrological Model displayed in RavenView](images/RavenView.png)
-This project uses the [Raven Hydrological Framework](https://raven.uwaterloo.ca/) and [RavenView](https://raven.uwaterloo.ca/RavenView/RavenView.html) provided by the University of Waterloo.
+This project uses the [Raven Hydrological Framework](https://raven.uwaterloo.ca/) and [RavenView](https://raven.uwaterloo.ca/RavenView/RavenView.html) (shown above). These are provided by the University of Waterloo and shared under an Artistic License 2.0.
 
 ## What is the Prairie Watershed Analytics project?
 

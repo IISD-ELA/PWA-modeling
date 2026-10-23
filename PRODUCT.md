@@ -61,6 +61,9 @@ How do I know I am using the tool correctly?
 ## Accessing and using PWA Products
 Request a dataset or model for your entire watershed 
 - Submit a request form to begin a quick screening of water retention options across the landscape. Please note that while we support watersheds up to 10,000 km², the complexity of your specific request may require us to contact you for further details.
+    - [Ponding Dataset Request From](https://forms.cloud.microsoft/r/EwazCXu53i)
+    - [Flow Model Request Form](https://forms.cloud.microsoft/r/wSrJXEk5QW)
+    - For urgent requests, please e-mail tsaleh@iisd-ela.org *after submitting the relevant request form(s)* 
 - Fully processed datasets and models are provided at a fee (ranging from $0 to > $1000CAD depending on the nature of the request). Sample datasets are available on request.
 - Processing time for paid data requests is typically 10 business days or less. 
 
