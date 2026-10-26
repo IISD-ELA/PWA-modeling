@@ -67,6 +67,8 @@ Request a dataset or model for your entire watershed
 - Fully processed datasets and models are provided at a fee (ranging from $0 to > $1000CAD depending on the nature of the request). Sample datasets are available on request.
 - Processing time for paid data requests is typically 10 business days or less. 
 
+Please review the [wetland mapping disclaimer](docs/wetlands_disclaimer.pdf) and the flow modeling disclaimer (under construction) to understand the limitations of PWA outputs. We recommend sharing these disclaimers with any third-party users of the data generated with this python package. 
+
 ## Need something more tailored? Want to collaborate?  
 - For farm-level analysis or modelling new landscape features at a specific site, an open-source Python package (LINK) is available for more advanced applications. Demos, support, and mapping services are available on request — just reach out to {e-mail}. 
  

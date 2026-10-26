@@ -19,17 +19,68 @@ The health of lakes and streams across the Canadian Prairies is closely connecte
 
 You can visit our website for more information on the [Prairie Watershed Analytics project](https://www.iisd.org/projects/prairie-watershed-analytics), the [International Institute for Sustainable Development](https://www.iisd.org/), and the [IISD Experimental Lakes Area](https://www.iisd.org/ela/).
 
-## Installing and Running the PWA Python Toolkit
+
+## Quickstart
+
+⚠️ Make sure your system satisfies the [requirements](#prerequisites) before getting started.
 
 This repository is the **orchestrator entry point** for the PWA pipeline. Installing it gives you a unified command-line interface (`pwa-step0` … `pwa-step3`) for the four packages that implement the pipeline:
 
 | Package | Step(s) it owns | Source repo |
 |---|---|---|
-| [`pwa-tools`](https://github.com/IISD-ELA/PWA-hydro-conditioning-tools) | Step 0 — hydro-conditioning | PWA-hydro-conditioning-tools |
-| [`pwa-raven`](https://github.com/IISD-ELA/PWA) | Steps 1 & 2 — NetCDF processing + Raven inputs | PWA / pwa_raven |
-| [`pwa-calibration`](https://github.com/IISD-ELA/PWA) | Step 3 — calibration | PWA / pwa_calibration |
+| 🏞️ [`pwa-tools`](https://github.com/IISD-ELA/PWA-hydro-conditioning-tools) | Step 0 — hydro-conditioning - Ponding Data Product | PWA-hydro-conditioning-tools |
+| 📈 [`pwa-raven`](https://github.com/IISD-ELA/PWA) | Steps 1 & 2 — NetCDF processing + Raven Flow Model Setup | PWA / pwa_raven |
+| 🎯 [`pwa-calibration`](https://github.com/IISD-ELA/PWA) | Step 3 — Flow Model Calibration | PWA / pwa_calibration |
 
 You can install just this repository and pip will pull the underlying packages along with it.
+
+### Quick install
+
+PWA is available on PyPI. Create a Python 3.12 environment, install GDAL through conda-forge, then install PWA and its Python dependencies with a single `pip` command:
+
+```bash
+conda create -n pwa python=3.12 -y
+conda activate pwa
+
+# Install GDAL separately as a compiled system dependency
+conda install -c conda-forge gdal -y
+
+# Install PWA and all Python package dependencies
+pip install pwa-modeling
+```
+
+Installing `pwa-modeling` automatically installs the required Python packages, including `pwa-tools`, `pwa-raven`, and `pwa-calibration`.
+
+Verify the installation:
+
+```bash
+pwa-hydrocondition --help
+```
+
+> **Note:** The Raven hydrological model executable must be installed separately and available on your system `PATH` for workflows that run Raven. MPI is also required separately if using parallel calibration.
+
+### Prepare the input data
+Create a ```Data/``` folder inside the ```PWA-modeling``` folder and download and extract the following zip files into it. Add a folder with the name of your watershed and populate it with the relevant data from the following public sources.
+- Watershed of interest based on outlet point from the [CLRH Hydrofabrics website](https://hydrology.uwaterloo.ca/CLRH/Hydrofabric.html) (e.g., ID: 05OE006 for Manning Canal)
+- Streams dataset of interest from [NHN streams website](https://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nhn_rhn/shp_en/).
+     1. In the directory, open the folder named with the first two digits of your CLRH station ID (e.g., open the ```05/``` folder if your CLRH station ID is ```05OE006```).
+     2. Download the ```.zip``` file whose name contains the third and fourth digits of your CLRH station ID (e.g., download ```nhn_rhn_05oe000_shp...``` if your CLRH station ID is ```05OE006```).
+     3. If multiple ```.zip``` files match, download both and check which shapefile covers the geographic extent of your watershed. You can do this by using a GIS tool such as ArcGIS.
+- Raster DEM(s) of interest from [LiDAR DEMs](https://mli.gov.mb.ca/dems/index_external_lidar.html) (e.g., Seine & Rat 2016 for Manning Canal)
+- Culvert inventory (optional): Prepare your culvert inventory (only Shapefiles in Line format are currently accepted)
+
+Your local workspace should now have the following structure:
+```powershell
+your-working-directory/
+├── PWA-modeling/
+    ├── README.md
+    ├── .gitignore
+    └── Data
+        └──  Watershed_Name
+            └──  ...data files you downloaded...
+└── PWA-hydro-conditioning-tools/
+    └──  ...repository contents...
+```
 
 ## Unified CLI (Recommended)
 
@@ -134,30 +185,6 @@ Behaviour is identical; the `pwa.*` symbols are direct re-exports of these.
   logging.basicConfig(level=logging.INFO, format="%(message)s")
   ```
 
-## Quick install
-
-PWA is available on PyPI. Create a Python 3.12 environment, install GDAL through conda-forge, then install PWA and its Python dependencies with a single `pip` command:
-
-```bash
-conda create -n pwa python=3.12 -y
-conda activate pwa
-
-# Install GDAL separately as a compiled system dependency
-conda install -c conda-forge gdal -y
-
-# Install PWA and all Python package dependencies
-pip install pwa-modeling
-```
-
-Installing `pwa-modeling` automatically installs the required Python packages, including `pwa-tools`, `pwa-raven`, and `pwa-calibration`.
-
-Verify the installation:
-
-```bash
-pwa-hydrocondition --help
-```
-
-> **Note:** The Raven hydrological model executable must be installed separately and available on your system `PATH` for workflows that run Raven. MPI is also required separately if using parallel calibration.
 
 ## Repository Structure
 ```
@@ -186,8 +213,46 @@ To be able to run this pipeline, the user must do the following:
    <img width="593" height="359" alt="image" src="https://github.com/user-attachments/assets/e6bbe9d9-b95c-48eb-a5b7-4b3f5f24455d" />
 4) **Install GDAL**: GDAL is a geospatial data processing software that our hydro-conditioning product utilizes. You can install ```GDAL``` by running the ```conda install -c conda-forge gdal```command on Anaconda PowerShell Prompt. You can verify the install with ```gdalinfo --version```.
 
+## System Requirements
 
-## Setup Instructions
+### Minimum Requirements
+- **OS**: Windows 10/11, Linux, macOS
+- **RAM**: 8GB (16GB+ recommended for calibration)
+- **CPU**: Multi-core processor (4+ cores recommended)
+- **Storage**: 10GB+ free space
+
+### HPC Calibration Requirements
+- **MPI Installation**: For parallel calibration using [3_calibrate.py](3_calibrate.py)
+- **Cores**: 8+ cores recommended for efficient parameter exploration
+- **RAM**: 32GB+ for large watersheds or extensive parameter spaces
+
+## Running tests
+
+This project uses `pytest`. From the repo root with the conda env activated:
+
+```bash
+python -m pytest -q
+```
+
+Each of the four packages (`pwa-tools`, `pwa-raven`, `pwa-calibration`, and this orchestrator) ships its own test suite. You can run them individually:
+
+```bash
+cd PWA-hydro-conditioning-tools && python -m pytest -q     # Step 0
+cd PWA/pwa_raven                && python -m pytest -q     # Steps 1-2
+cd PWA/pwa_calibration          && python -m pytest -q     # Step 3
+cd PWA-modeling  && python -m pytest -q     # orchestrator
+```
+
+Useful flags during development:
+
+- `-q` — quiet output (one dot per test, summary at the end)
+- `-k <pattern>` — run only tests whose name matches the pattern
+- `-x` — stop on the first failure (fast feedback while iterating)
+- `--tb=short` — concise tracebacks
+
+Tests live in each package under `tests/unit/` and (where applicable) `tests/regression/`. All tests should pass before opening a pull request.
+
+## Detailed Setup Instructions and Features
 ### 1. Clone this repository and the pwa-tools repository
 1.1 Open the Visual Studio Code app on your desktop.
 1.2 Open a new Powershell terminal by using the toolbar on the top left corner.
@@ -336,50 +401,11 @@ You can also see any intermediate files in the ```...\Interim``` folder:
 
 The output files include a depression depths raster .tif, depression depths shapefile, and a zonal statistics file for your watershed by default, as well as a wetland polygons shapefile with statistics (area, total storage, and median depth) if the user chooses to generate it.
 
-## Running tests
-
-This project uses `pytest`. From the repo root with the conda env activated:
-
-```bash
-python -m pytest -q
-```
-
-Each of the four packages (`pwa-tools`, `pwa-raven`, `pwa-calibration`, and this orchestrator) ships its own test suite. You can run them individually:
-
-```bash
-cd PWA-hydro-conditioning-tools && python -m pytest -q     # Step 0
-cd PWA/pwa_raven                && python -m pytest -q     # Steps 1-2
-cd PWA/pwa_calibration          && python -m pytest -q     # Step 3
-cd PWA-modeling  && python -m pytest -q     # orchestrator
-```
-
-Useful flags during development:
-
-- `-q` — quiet output (one dot per test, summary at the end)
-- `-k <pattern>` — run only tests whose name matches the pattern
-- `-x` — stop on the first failure (fast feedback while iterating)
-- `--tb=short` — concise tracebacks
-
-Tests live in each package under `tests/unit/` and (where applicable) `tests/regression/`. All tests should pass before opening a pull request.
-
 ## Contributing
 
-Workflow for adding a feature or fixing a bug:
+See [Contributing Page](CONTRIBUTING.MD)
 
-1. **Create a feature branch** off the default branch in the relevant repo (`main` for pwa-tools and the orchestrator, `master` for PWA). Use `feat/<short-name>` for features and `fix/<short-name>` for bug fixes — never commit directly to the default branch.
-2. **Write a failing test first** that describes the desired behavior. Run `python -m pytest -q` to confirm the new test fails. For bug fixes, the test should reproduce the bug.
-3. **Write code to make the test pass.** Run the suite again and confirm green.
-4. **Commit incrementally** with focused commit messages that explain *why* (the motivation, the problem, the trade-off) rather than just *what* (the diff is the *what*).
-5. **Open a pull request** against the default branch. Tag the relevant reviewer. The PR description should include a short summary, a test plan, and links to any related issues.
-
-Practical notes:
-
-- New features should ship with corresponding tests. If a unit test is hard to write, that's often a signal the design needs refactoring.
-- Avoid disabling, skipping, or commenting out tests to make builds pass — investigate the root cause and fix it properly.
-- Keep commits small and atomic. If you find yourself making unrelated changes in the same commit, split them.
-- Don't add features beyond what the issue/PR scope requires. YAGNI — build for the current need, refactor later when a second use case emerges.
-
-### 6. Contact and support
+### Contact and support
 For support or any other inquiries, please contact us at eladata@iisd.net.
 
 
